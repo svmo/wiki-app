@@ -19,37 +19,64 @@
 
       </section>
 
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+      <!-- <script type="text/javascript" src="js/script.js"></script> -->
     <script>
     var header = document.querySelector('header');
     var section = document.querySelector('section');
 
-    var requestURL = 'https://api.myjson.com/bins/c66as.json';
-    //var params = {"action":"query","format":"json","titles":"Janelle Monáe","prop":"categories",};
-    var request = new XMLHttpRequest();
+    var keyword = prompt("What would you like to search for?")
+    //var keyword = 'cats'; //keyword that will be searched
+    console.log("hello");
 
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
+    function ajax (keyword) { //function to query wiki api with keyword
+      $.ajax({
+        url: "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + keyword + "&prop=info&inprop=url&utf8=&format=json",
 
-    request.onload = function() {
-      var wikiData = request.response;
-      populateHeader(wikiData);
-      //showHeroes(superHeroes);
+       dataType: "jsonp",
+       success: function(response) {
+           console.log(response.query);
+           if (response.query.searchinfo.totalhits === 0) {
+             showError(keyword);
+           }
+           else {
+               populateHeader(response);
+               showResults(response);
+           }
+      },
+       error: function () {
+        alert("Error retrieving search results, please refresh the page");
+       }
+     });
     }
 
-    function populateHeader(jsonObj) {
+    ajax(keyword);
+
+    function populateHeader(response) {
       var myH1 = document.createElement('h1');
-      var infoWiki = jsonObj['parse'];
-      var titleWiki = infoWiki.title;
-      myH1.textContent = titleWiki;
+      myH1.textContent = keyword;
       header.appendChild(myH1);
+      }
 
-      // var myPara = document.createElement('p');
-      // myPara.textContent = 'Hometown: ' + jsonObj['homeTown'] + ' // Formed: ' + jsonObj['formed'];
-      // header.appendChild(myPara);
+      function showResults(response) {
+        var infoWiki = response.query.search;
+        var fragment = document.createDocumentFragment(); //this appends new h1 elements
+
+        for (var i = 0; i < infoWiki.length; i++ ) {
+          var myArticle = document.createElement('article');
+          var myH2 = document.createElement('h2');
+          var myPara1 = document.createElement('p');
+          //var myList = document.createElement('ul');
+
+          myH2.innerText = infoWiki[i].title;
+          myPara1.innerHTML = infoWiki[i].snippet + '...';
+          console.log(myH2.textContent);
+          fragment.appendChild(myH2);
+          fragment.appendChild(myPara1);
+      }
+        myArticle.appendChild(fragment);
+        section.appendChild(myArticle);
     }
-
-
     </script>
   </body>
 </html>
