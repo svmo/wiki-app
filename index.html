@@ -65,12 +65,19 @@
         for (var i = 0; i < infoWiki.length; i++ ) {
           var myArticle = document.createElement('article');
           var myH2 = document.createElement('h2');
+          var a = document.createElement('a');
           var myPara1 = document.createElement('p');
           //var myList = document.createElement('ul');
 
-          myH2.innerText = infoWiki[i].title;
+          // a.appendChild(myH2);
+          a.href = "https://en.wikipedia.org/?curid=" + infoWiki[i].pageid;
+          a.innerText = infoWiki[i].title;
+          myH2.append(a);
+          //myH2.innerText = infoWiki[i].title;
           myPara1.innerHTML = infoWiki[i].snippet + '...';
-          console.log(myH2.textContent);
+          console.log(a);
+          var headers = document.getElementsByTagName('h2');
+          //console.log(headers[2]);
           fragment.appendChild(myH2);
           fragment.appendChild(myPara1);
       }
