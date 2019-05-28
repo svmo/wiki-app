@@ -35,7 +35,7 @@
 
        dataType: "jsonp",
        success: function(response) {
-           console.log(response);
+           //console.log(response);
            if (response[1].length != 20) {
              showError(keyword);
            }
@@ -50,7 +50,28 @@
      });
     }
 
+    function getImage (keyword) { //function to query wiki api with keyword
+      $.ajax({
+        url: "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&wbptterms=description&gpssearch=" + keyword + "&gpslimit=20",
+
+       dataType: "jsonp",
+       success: function(response) {
+           //console.log(response.query.pages);
+           if (response.query.pages.length != 20) {
+             showError(keyword);
+           }
+           else {
+               populateImages(response);
+           }
+      },
+       error: function () {
+        alert("Error retrieving search results, please refresh the page");
+       }
+     });
+    }
+
     ajax(keyword);
+    getImage(keyword);
 
     function populateHeader(response) {
       var myH1 = document.createElement('h1');
@@ -61,7 +82,7 @@
       function showResults(response) {
         var infoWiki = response;
         var infoWikiSize = response[1].length
-        console.log(infoWikiSize);
+        //console.log(infoWikiSize);
         var fragment = document.createDocumentFragment(); //this appends new h1 elements
 
         for (var i = 0; i < infoWikiSize; i++ ) {
@@ -77,7 +98,7 @@
           myH2.append(a);
           //myH2.innerText = infoWiki[i].title;
           myPara1.innerHTML = infoWiki[2][i];
-          console.log(a);
+          //console.log(a);
           var headers = document.getElementsByTagName('h2');
           //console.log(headers[2]);
           fragment.appendChild(myH2);
@@ -86,6 +107,30 @@
         myArticle.appendChild(fragment);
         section.appendChild(myArticle);
     }
+
+    function populateImages(response) {
+        console.log(response.query.pages[2].terms.description);
+        var imgWiki = response.query.pages;
+        console.log(response.query.pages.length);
+        var fragment = document.createDocumentFragment();
+
+        for (var j = 0; j < imgWiki.length; j++) {
+          var myImg = document.createElement('img');
+          if (imgWiki[j].hasOwnProperty("thumbnail") === true) {
+          myImg.src = response.query.pages[j].thumbnail.source;
+          //myImg.alt = response.query.pages[j].terms.description;
+        } else {
+          myImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Article_icon_cropped.svg/512px-Article_icon_cropped.svg.png";
+          myImg.alt = "No picture";
+        }
+          fragment.appendChild(myImg);
+
+        }
+        myLI = document.createElement('li')
+        myLI.appendChild(fragment);
+        section.appendChild(myLI);
+    }
+
     </script>
   </body>
 </html>
