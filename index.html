@@ -31,12 +31,12 @@
 
     function ajax (keyword) { //function to query wiki api with keyword
       $.ajax({
-        url: "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + keyword + "&prop=info&inprop=url&utf8=&format=json",
+        url: "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + keyword + "&limit=20&callback=?",
 
        dataType: "jsonp",
        success: function(response) {
-           console.log(response.query);
-           if (response.query.searchinfo.totalhits === 0) {
+           console.log(response);
+           if (response[1].length != 20) {
              showError(keyword);
            }
            else {
@@ -59,10 +59,12 @@
       }
 
       function showResults(response) {
-        var infoWiki = response.query.search;
+        var infoWiki = response;
+        var infoWikiSize = response[1].length
+        console.log(infoWikiSize);
         var fragment = document.createDocumentFragment(); //this appends new h1 elements
 
-        for (var i = 0; i < infoWiki.length; i++ ) {
+        for (var i = 0; i < infoWikiSize; i++ ) {
           var myArticle = document.createElement('article');
           var myH2 = document.createElement('h2');
           var a = document.createElement('a');
@@ -70,11 +72,11 @@
           //var myList = document.createElement('ul');
 
           // a.appendChild(myH2);
-          a.href = "https://en.wikipedia.org/?curid=" + infoWiki[i].pageid;
-          a.innerText = infoWiki[i].title;
+          a.href = infoWiki[3][i];
+          a.innerText = infoWiki[1][i];
           myH2.append(a);
           //myH2.innerText = infoWiki[i].title;
-          myPara1.innerHTML = infoWiki[i].snippet + '...';
+          myPara1.innerHTML = infoWiki[2][i];
           console.log(a);
           var headers = document.getElementsByTagName('h2');
           //console.log(headers[2]);
