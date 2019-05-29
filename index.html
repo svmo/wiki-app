@@ -36,8 +36,9 @@
        dataType: "jsonp",
        success: function(response) {
            console.log(response);
-           if (response[1].length != 20) {
-             showError(keyword);
+           if (response[1].length == 0) {
+             //showError(keyword);
+             alert("No results, try another search term");
            }
            else {
                populateHeader(response);
