@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Wiki Information</title>
+    <title>Wiki TOC</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -15,9 +15,29 @@
 
       </header>
 
+      <!-- <div class="input-field" id="search-bar">
+        <form class="search-form" action="index.html" method="post">
+          <input type="text" id="search-term" name="user-search-term" placeholder="Enter search term" autofocus>
+          <button type="submit" name="user-submit" id="submit">Search</button>
+        </form>
+
+      </div> -->
+      <div id="container">
+
+        <div id="output">
+
+        </div>
+
+      </div>
+
+
+
       <section>
 
       </section>
+
+
+
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
       <!-- <script type="text/javascript" src="js/script.js"></script> -->
@@ -25,25 +45,47 @@
     var header = document.querySelector('header');
     var section = document.querySelector('section');
 
-    var keyword = prompt("What would you like to search for?")
+    // var keyword_element = document.getElementById('search-term');
+    // var keyword = keyword_element.value;
     //var keyword = 'cats'; //keyword that will be searched
-    console.log("hello");
+    var keyword = prompt("What would you like to search for?");
+    console.log(keyword);
 
     function ajax (keyword) { //function to query wiki api with keyword
       $.ajax({
         url: "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + keyword + "&limit=20&callback=?",
-
        dataType: "jsonp",
        success: function(response) {
-           console.log(response);
+          $("#output").html("");
+           console.log(response[1].length);
            if (response[1].length == 0) {
              //showError(keyword);
-             alert("No results, try another search term");
+             alert("Error retrieving search results, please refresh the page");
            }
            else {
-               populateHeader(response);
-               showResults(response);
-           }
+               $("#container").prepend('<h1>' + keyword + '</h1>');
+               for (var i = 0; i < response[1].length; i++ ) {
+                 console.log(response[3][i])
+                 $("#output").append('<a href=' + response[3][i] + '><div class=search-row><div class=search-img id=image' + [i] + '></div><div class=content><span class=card-title truncate>'+ response[1][i] + '</span><p>' + response[2][i] + '</p></div></div></a>');
+               }
+               $.ajax({
+                       url: "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&wbptterms=description&gpssearch=" + keyword + "&gpslimit=20",
+                       method: "GET",
+                       dataType: "jsonp",
+                       success: function(newData) {
+                         for (var i = 0; i < 20; i++) {
+                           if (newData.query.pages[i].hasOwnProperty("thumbnail") === true) {
+                             $("#image" + (newData.query.pages[i].index - 1)).html(`<img src='${newData.query.pages[i].thumbnail.source}' class='responsive-img valign'>`);
+                           } else {
+                             $("#image" + (newData.query.pages[i].index - 1)).html("<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Article_icon_cropped.svg/512px-Article_icon_cropped.svg.png' class='responsive-img valign articleIcon'>");
+                           }
+                         }
+                       },
+                       error: function() {
+                         console.log("second call unsuccessful");
+                       }
+                     })
+                   }
       },
        error: function () {
         alert("Error retrieving search results, please refresh the page");
@@ -53,16 +95,20 @@
 
     ajax(keyword);
 
+    function check() {
+      console.log("Check");
+    }
+
     function populateHeader(response) {
       var myH1 = document.createElement('h1');
       myH1.textContent = keyword;
       header.appendChild(myH1);
       }
-
+    //
       function showResults(response) {
         var infoWiki = response;
         var infoWikiSize = response[1].length
-        console.log(infoWikiSize);
+        //console.log(infoWikiSize);
         var fragment = document.createDocumentFragment(); //this appends new h1 elements
 
         for (var i = 0; i < infoWikiSize; i++ ) {
@@ -73,13 +119,13 @@
           //var myList = document.createElement('ul');
 
           // a.appendChild(myH2);
-          a.href = infoWiki[3][i];
+          a.href = 'javascript: check();';
+          // a.onclick = 'return check();';
           a.innerText = infoWiki[1][i];
           myH2.append(a);
           //myH2.innerText = infoWiki[i].title;
           myPara1.innerHTML = infoWiki[2][i];
-          console.log(a);
-          var headers = document.getElementsByTagName('h2');
+          //console.log(a);
           //console.log(headers[2]);
           fragment.appendChild(myH2);
           fragment.appendChild(myPara1);
@@ -87,6 +133,8 @@
         myArticle.appendChild(fragment);
         section.appendChild(myArticle);
     }
+
+
     </script>
   </body>
 </html>
