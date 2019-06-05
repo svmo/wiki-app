@@ -7,9 +7,17 @@ html {
 body {
   width: 800px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-h1, h2 {
+
+
+h1, h2,
+.input-field,
+button {
   font-family: 'Raleway', sans-serif;
 }
 
@@ -19,11 +27,13 @@ h1 {
   font-size: 4rem;
   text-align: center;
   text-transform: capitalize;
+  margin-bottom: 10px;
 }
 
 a {
   font-size: 2em;
   text-decoration: none;
+  color: black;
 }
 
 p {
@@ -36,18 +46,6 @@ p {
 
 /* section styles */
 
-section article {
-  /* width: 33%;
-  float: left; */
-}
-
-section p {
-  margin: 5px 0;
-}
-
-section ul {
-  margin-top: 0;
-}
 
 h2 {
   font-size: 2.5rem;
@@ -93,4 +91,44 @@ h2 {
    width: 250px;
    height: 20px;
    margin-top: 30px;
+}
+
+.input-field {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+input#search-term {
+  background-color: white;
+  background-position: 0px 10px;
+  background-repeat: no-repeat;
+  padding-left: 6px;
+  width: 70%;
+  margin-right: 10px;
+  font-size: 1em;
+  border-radius: 8px;
+}
+
+input {
+  padding-right: 10px;
+}
+
+input, button {
+  padding: 10px;
+}
+
+button {
+  width: 75px;
+  border-radius: 8px;
+}
+
+button#submit {
+  margin-right: 5px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
