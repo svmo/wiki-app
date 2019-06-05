@@ -15,13 +15,15 @@
 
       </header>
 
-      <!-- <div class="input-field" id="search-bar">
+      <div class="input-field" id="search-bar">
         <form class="search-form" action="index.html" method="post">
           <input type="text" id="search-term" name="user-search-term" placeholder="Enter search term" autofocus>
           <button type="submit" name="user-submit" id="submit">Search</button>
+          <button type="button" name="user-clear" id="clear">Clear</button>
         </form>
 
-      </div> -->
+      </div>
+
       <div id="container">
 
         <div id="output">
@@ -48,22 +50,27 @@
     // var keyword_element = document.getElementById('search-term');
     // var keyword = keyword_element.value;
     //var keyword = 'cats'; //keyword that will be searched
-    var keyword = prompt("What would you like to search for?");
-    console.log(keyword);
+    // var keyword = prompt("What would you like to search for?");
+    // console.log(keyword);
 
-    function ajax (keyword) { //function to query wiki api with keyword
+    // function ajax (keyword) { //function to query wiki api with keyword
+    $("#search-bar").submit(function(event) {
+      var keyword = $('#search-term').attr('value');
+      console.log(keyword);
+      event.preventDefault();
       $.ajax({
         url: "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + keyword + "&limit=20&callback=?",
        dataType: "jsonp",
        success: function(response) {
           $("#output").html("");
+          $("#keyword-name").html("");
            console.log(response[1].length);
            if (response[1].length == 0) {
              //showError(keyword);
              alert("Error retrieving search results, please refresh the page");
            }
            else {
-               $("#container").prepend('<h1>' + keyword + '</h1>');
+               $("#container").prepend('<h1 id=keyword-name>' + keyword + '</h1>');
                for (var i = 0; i < response[1].length; i++ ) {
                  console.log(response[3][i])
                  $("#output").append('<a href=' + response[3][i] + '><div class=search-row><div class=search-img id=image' + [i] + '></div><div class=content><span class=card-title truncate>'+ response[1][i] + '</span><p>' + response[2][i] + '</p></div></div></a>');
@@ -91,9 +98,15 @@
         alert("Error retrieving search results, please refresh the page");
        }
      });
-    }
+   });
 
-    ajax(keyword);
+$("#clear").click(function() {
+  $("#search-term").val("").focus();
+  $("#output").html("");
+  $("#keyword-name").html("");
+});
+
+    // ajax(keyword);
 
     function check() {
       console.log("Check");
@@ -133,6 +146,7 @@
         myArticle.appendChild(fragment);
         section.appendChild(myArticle);
     }
+
 
 
     </script>
