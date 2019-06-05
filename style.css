@@ -88,3 +88,8 @@ h2 {
 .debug {
   border: 2px solid red;
 }
+
+.input-field {
+  padding-top: 66px;
+  padding-left: 169px;
+}
