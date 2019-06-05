@@ -7,18 +7,17 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
   </head>
 
   <body>
 
       <header>
-        <h1>Wikipedia Search</h1>
+
       </header>
 
       <div class="input-field" id="search-bar">
         <form class="search-form" action="index.html" method="post">
-          <input type="text" id="search-term" name="user-search-term" placeholder="Enter search term" spellcheck="value" autofocus>
+          <input type="text" id="search-term" name="user-search-term" placeholder="Enter search term" autofocus>
           <button type="submit" name="user-submit" id="submit">Search</button>
           <button type="button" name="user-clear" id="clear">Clear</button>
         </form>
@@ -33,12 +32,28 @@
 
       </div>
 
+
+
+      <section>
+
+      </section>
+
+
+
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
       <!-- <script type="text/javascript" src="js/script.js"></script> -->
     <script>
     var header = document.querySelector('header');
     var section = document.querySelector('section');
-  
+
+    // var keyword_element = document.getElementById('search-term');
+    // var keyword = keyword_element.value;
+    //var keyword = 'cats'; //keyword that will be searched
+    // var keyword = prompt("What would you like to search for?");
+    // console.log(keyword);
+
+    // function ajax (keyword) { //function to query wiki api with keyword
     $("#search-bar").submit(function(event) {
       var keyword = $('#search-term').attr('value');
       console.log(keyword);
@@ -55,10 +70,10 @@
              alert("Error retrieving search results, please refresh the page");
            }
            else {
-              //  $("#container").prepend('<h2 id=keyword-name>' + keyword + '</h2>');
+               $("#container").prepend('<h1 id=keyword-name>' + keyword + '</h1>');
                for (var i = 0; i < response[1].length; i++ ) {
                  console.log(response[3][i])
-                 $("#output").append('<a href=' + response[3][i] + ' target="_blank"><div class=search-row><div class=search-img id=image' + [i] + '></div><div class=content><span class=card-title truncate>'+ response[1][i] + '</span><p>' + response[2][i] + '</p></div></div></a>');
+                 $("#output").append('<a href=' + response[3][i] + '><div class=search-row><div class=search-img id=image' + [i] + '></div><div class=content><span class=card-title truncate>'+ response[1][i] + '</span><p>' + response[2][i] + '</p></div></div></a>');
                }
                $.ajax({
                        url: "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&wbptterms=description&gpssearch=" + keyword + "&gpslimit=20",
@@ -91,7 +106,46 @@ $("#clear").click(function() {
   $("#keyword-name").html("");
 });
 
-    
+    // ajax(keyword);
+
+    function check() {
+      console.log("Check");
+    }
+
+    function populateHeader(response) {
+      var myH1 = document.createElement('h1');
+      myH1.textContent = keyword;
+      header.appendChild(myH1);
+      }
+    //
+      function showResults(response) {
+        var infoWiki = response;
+        var infoWikiSize = response[1].length
+        //console.log(infoWikiSize);
+        var fragment = document.createDocumentFragment(); //this appends new h1 elements
+
+        for (var i = 0; i < infoWikiSize; i++ ) {
+          var myArticle = document.createElement('article');
+          var myH2 = document.createElement('h2');
+          var a = document.createElement('a');
+          var myPara1 = document.createElement('p');
+          //var myList = document.createElement('ul');
+
+          // a.appendChild(myH2);
+          a.href = 'javascript: check();';
+          // a.onclick = 'return check();';
+          a.innerText = infoWiki[1][i];
+          myH2.append(a);
+          //myH2.innerText = infoWiki[i].title;
+          myPara1.innerHTML = infoWiki[2][i];
+          //console.log(a);
+          //console.log(headers[2]);
+          fragment.appendChild(myH2);
+          fragment.appendChild(myPara1);
+      }
+        myArticle.appendChild(fragment);
+        section.appendChild(myArticle);
+    }
 
 
 
