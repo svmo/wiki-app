@@ -21,10 +21,17 @@ h1 {
   text-transform: capitalize;
 }
 
-header p {
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-align: center;
+a {
+  font-size: 2em;
+  text-decoration: none;
+}
+
+p {
+  font-size: .5em;
+  text-align: left;
+  padding-top: 28px;
+  width: 95%;
+
 }
 
 /* section styles */
@@ -46,11 +53,38 @@ h2 {
   font-size: 2.5rem;
   /* letter-spacing: -5px; */
   margin-bottom: 10px;
-  float: left;
-  width: 50%
+  /* float: left;
+  width: 50% */
 }
 
-img {
-  float: right;
-  width: 50%;
+.search-row {
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
+}
+
+.responsive-img {
+  order: 1;
+  margin: auto;
+}
+
+.search-img {
+  margin: auto;
+}
+
+.content {
+  order: -1;
+  width: 70%;
+}
+
+.articleIcon {
+  width: 250px;
+}
+
+.card-image {
+  height: 100%;
+}
+
+.debug {
+  border: 2px solid red;
 }
