@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Wiki Search</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="boot.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <body>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container py-2">
+                <a class="navbar-brand order-1 mr-0" href="#">Learning Llamas</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon bg-dark"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+                
+        <!-- jumbotron -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container text-sm-center pt-5 mt-5">
+                <h1 class="display-2 text-md-center text-white">Wiki Search</h1>
+                <div class="row justify-content-center"> 
+                    <div class="col-8" id="search-bar"> <!-- search input -->
+                        <form class="search-form">
+                            <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" id="search-term" name="user-search-term" placeholder="Enter search term" autofocus>
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-light" type="submit" id="submit">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div> <!-- /search input -->
+                </div>
+            </div>
+        </div> <!-- /jumbotron -->
+
+        <!-- <div id="output"></div> -->
+
+        <div class="container"> <!-- wiki content -->
+            <h1 class="display-6 pb-4 text-white">Random Wiki</h1>
+            <!-- <div class="row justify-content-center"> -->
+            <div class="card-deck">
+                <!-- <div class="col-sm-4"> -->
+                    <div class="card border-dark border-3 bg-info mb-4">
+                        <img src="https://placekitten.com/640/360" class="card-img-top img-fluid" alt="Kitten">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                <!-- </div> -->
+                <!-- <div class="col-sm-4"> -->
+                    <div class="card bg-info mb-4">
+                        <img src="https://placekitten.com/640/360" class="card-img-top" alt="Kitten">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                    <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
+                    <div class="card bg-info mb-4">
+                            <img src="https://placekitten.com/640/360" class="card-img-top" alt="Kitten">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                    </div>
+                    <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 3 on md--></div>
+                <!-- </div> -->
+            </div>
+
+        <!-- footer -->
+            <div class="row py-3 mt-5">
+                <div class="col-md-7">
+                <ul class="nav">
+                    <li class="nav-item">
+                    <a class="nav-link text-white" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Contact Us</a>
+                    </li>
+                </ul>
+                </div>
+                <div class="col-md text-md-right text-white">
+                <small>&copy; 2019 Making Money &amp; Sarasaurus</small>
+                </div>
+            </div><!-- /footer -->
+        </div> <!-- /container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
