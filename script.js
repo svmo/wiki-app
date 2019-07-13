@@ -22,7 +22,10 @@ $("#search-bar").submit(function(event) {
           //  $("#container").prepend('<h2 id=keyword-name>' + keyword + '</h2>');
             for (var i = 0; i < response[1].length; i++ ) {
               console.log(response[3][i])
-              $("#output").append('<a href=' + response[3][i] + ' target="_blank"><div class=search-row><div class=search-img id=image' + [i] + '></div><div class=content><span class=card-title truncate>'+ response[1][i] + '</span><p>' + response[2][i] + '</p></div></div></a>');
+              wikiLink = response[3][i];
+              wikiTitle = response[1][i];
+              wikiPara = response[2][i];
+              $("#card-deck").append('<div class="col-md-6 col-lg-3"><div class="card border-dark border-3 bg-info mb-4" id="image' + [i] + '"'+ '><div class="card-body h-100"><h5 class="card-title">' + wikiTitle + '</h5><p class="card-text">' + wikiPara.split(/\s+/).slice(0,10).join(" ") + '...</p><a href=' + wikiLink + ' class="btn btn-primary" target="_blank">Open in wiki</a></div></div></div>');
             }
             $.ajax({
                     url: "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&wbptterms=description&gpssearch=" + keyword + "&gpslimit=20",
@@ -31,9 +34,9 @@ $("#search-bar").submit(function(event) {
                     success: function(newData) {
                       for (var i = 0; i < 20; i++) {
                         if (newData.query.pages[i].hasOwnProperty("thumbnail") === true) {
-                          $("#image" + (newData.query.pages[i].index - 1)).html(`<img src='${newData.query.pages[i].thumbnail.source}' class='responsive-img valign'>`);
+                          $('#image' + (newData.query.pages[i].index - 1)).prepend(`<img src=${newData.query.pages[i].thumbnail.source} class="card-img-top" height="250" width="200">`);
                         } else {
-                          $("#image" + (newData.query.pages[i].index - 1)).html("<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Article_icon_cropped.svg/512px-Article_icon_cropped.svg.png' class='responsive-img valign articleIcon'>");
+                          $('#image' + (newData.query.pages[i].index - 1)).prepend('<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Article_icon_cropped.svg/512px-Article_icon_cropped.svg.png" class="card-img-top" height="250" width="200">');
                         }
                       }
                     },
